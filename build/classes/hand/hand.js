@@ -19,7 +19,6 @@ var Hand = /** @class */ (function () {
         configurable: true
     });
     Hand.getMedianMax = function (rawcard) {
-        //I wish I knew what I did here. Looking at this is giving me a headache.
         //This returns the maximum valued card, from the medain set.
         //First it returns the median value, and if there is multiple median values, then it gets the maximum
         //Reduces hand into a count objects Eg. {AH:4,KD:1} or {2H:2,3D:2,4S:1}
