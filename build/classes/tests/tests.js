@@ -150,6 +150,7 @@ var Tests = /** @class */ (function () {
         if (style === void 0) { style = randomInteger(1, 10); }
         if (amount === void 0) { amount = 100; }
         //Generates styles and checks them. NOTE: Rank 1 can sometimes generate rank 5(Straight) cards if the stars align
+        var fails = 0;
         for (var u = 0; u < amount; u++) {
             var h = this.createHand(style);
             var rank = h === null || h === void 0 ? void 0 : h.rank;
@@ -161,8 +162,12 @@ var Tests = /** @class */ (function () {
                 if (style == 1 && rank == 5) {
                     console.log("Random hand of cards produced a straight. This is a lucky draw, not an error");
                 }
+                else {
+                    fails += 1;
+                }
             }
         }
+        console.log("Completed " + amount + " Tests, With " + fails + " failures");
     };
     return Tests;
 }());

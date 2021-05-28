@@ -139,6 +139,7 @@ export class Tests {
     }
     public static checkStyle(style = randomInteger(1, 10), amount = 100) {
         //Generates styles and checks them. NOTE: Rank 1 can sometimes generate rank 5(Straight) cards if the stars align
+        let fails = 0;
         for (let u = 0; u < amount; u++) {
             let h = this.createHand(style);
             let rank = h?.rank;
@@ -149,8 +150,11 @@ export class Tests {
                 console.log("Returned:" + rank);
                 if(style == 1 && rank == 5){
                     console.log("Random hand of cards produced a straight. This is a lucky draw, not an error")
+                }else{
+                    fails += 1;
                 }
             } 
         }
+        console.log("Completed "+amount+" Tests, With "+fails+" failures")
     }
 }
