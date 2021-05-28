@@ -119,7 +119,7 @@ export class Hand {
         return 0;
     }
 
-    get isStraight() { //Returns Rank 5 if flush
+    get isStraight() { //Returns Rank 5 if straight
         let vals = this._cards.map((a) => a.value);
         if (Math.max(...vals) - Math.min(...vals) == 4) {
             return 5;
