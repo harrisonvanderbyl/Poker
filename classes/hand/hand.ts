@@ -17,6 +17,8 @@ export class Hand {
         //I wish I knew what I did here. Looking at this is giving me a headache.
         //This returns the maximum valued card, from the medain set.
         //First it returns the median value, and if there is multiple median values, then it gets the maximum
+
+        //Reduces hand into a count objects Eg. {AH:4,KD:1} or {2H:2,3D:2,4S:1}
         let cards: any = rawcard.reduce(function (cards: any, x: any) {
             if (!cards[x.value]) {
                 cards[x.value] = 1;
@@ -25,18 +27,25 @@ export class Hand {
             }
             return cards;
         }, {});
+        
+        //Gets the median card count
         let medianAmount = Math.max(...Object.values(cards).map((a) => Number(a)));
+
+
         switch (medianAmount) {
             case 1: {
+                //In the case of the maximum median amount being one, there is no duplicates, and the highest value is returned.
                 return Math.max(...Object.keys(cards).map((a) => Number(a)));
             }
             case 2: {
+                //In the case of the median amount being 2, the lower cards are filtered out and the result filtered, and the Maximum returned.
                 let kards = Object.keys(cards).filter((a) => {
                     return cards[a] != 1;
                 });
                 return Math.max(...kards.map((a) => Number(a)));
             }
             default: {
+                //In the case of 3 or more cards being the same, that card is deemed maximum value and returned.
                 for (let c of Object.keys(cards)) {
                     if (cards[c] == medianAmount) {
                         return c;
@@ -44,6 +53,7 @@ export class Hand {
                 }
             }
         }
+        
         return 0;
     }
     //Remove the Median Maximum Card

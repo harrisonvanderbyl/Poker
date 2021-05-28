@@ -22,6 +22,7 @@ var Hand = /** @class */ (function () {
         //I wish I knew what I did here. Looking at this is giving me a headache.
         //This returns the maximum valued card, from the medain set.
         //First it returns the median value, and if there is multiple median values, then it gets the maximum
+        //Reduces hand into a count objects Eg. {AH:4,KD:1} or {2H:2,3D:2,4S:1}
         var cards = rawcard.reduce(function (cards, x) {
             if (!cards[x.value]) {
                 cards[x.value] = 1;
@@ -31,18 +32,22 @@ var Hand = /** @class */ (function () {
             }
             return cards;
         }, {});
+        //Gets the median card count
         var medianAmount = Math.max.apply(Math, Object.values(cards).map(function (a) { return Number(a); }));
         switch (medianAmount) {
             case 1: {
+                //In the case of the maximum median amount being one, there is no duplicates, and the highest value is returned.
                 return Math.max.apply(Math, Object.keys(cards).map(function (a) { return Number(a); }));
             }
             case 2: {
+                //In the case of the median amount being 2, the lower cards are filtered out and the result filtered, and the Maximum returned.
                 var kards = Object.keys(cards).filter(function (a) {
                     return cards[a] != 1;
                 });
                 return Math.max.apply(Math, kards.map(function (a) { return Number(a); }));
             }
             default: {
+                //In the case of 3 or more cards being the same, that card is deemed maximum value and returned.
                 for (var _i = 0, _a = Object.keys(cards); _i < _a.length; _i++) {
                     var c = _a[_i];
                     if (cards[c] == medianAmount) {
