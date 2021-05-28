@@ -129,14 +129,6 @@ export class Tests {
             }
         }
     }
-    public static checkCompare(style = randomInteger(1, 10), amount = 100) {
-        //TODO Finish this test, Honestly not even sure how to do this
-        for (let u = 0; u < amount; u++) {
-            let h1 = this.createHand(style);
-            let newcards: string[] = h1.cards.map((a) => a.raw);
-            let h2 = new Hand(newcards);
-        }
-    }
     public static checkStyle(style = randomInteger(1, 10), amount = 100) {
         //Generates styles and checks them. NOTE: Rank 1 can sometimes generate rank 5(Straight) cards if the stars align
         let fails = 0;

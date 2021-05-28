@@ -8,7 +8,7 @@ var rl = readline.createInterface({
     output: process.stdout,
 });
 function test() {
-    rl.question("Test For What Rank (1-10) : ", function (style) {
+    rl.question("Generate hands of a particular Rank, Then test the discriminator. Test For What Rank (1-10) : ", function (style) {
         console_1.assert(style >= 1 && style <= 10, "Please enter a number between 1 and 10");
         if (style >= 1 && style <= 10) {
             rl.question("How many tests would you like to run?: ", function (amount) {

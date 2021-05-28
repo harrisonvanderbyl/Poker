@@ -136,16 +136,6 @@ var Tests = /** @class */ (function () {
             }
         }
     };
-    Tests.checkCompare = function (style, amount) {
-        if (style === void 0) { style = randomInteger(1, 10); }
-        if (amount === void 0) { amount = 100; }
-        //TODO Finish this test, Honestly not even sure how to do this
-        for (var u = 0; u < amount; u++) {
-            var h1 = this.createHand(style);
-            var newcards = h1.cards.map(function (a) { return a.raw; });
-            var h2 = new hand_1.Hand(newcards);
-        }
-    };
     Tests.checkStyle = function (style, amount) {
         if (style === void 0) { style = randomInteger(1, 10); }
         if (amount === void 0) { amount = 100; }
