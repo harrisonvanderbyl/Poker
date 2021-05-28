@@ -13,7 +13,7 @@ export class Hand {
     get cards() {
         return this._cards;
     }
-    public static getMedianMax(rawcard: any) {
+    public static getMedianMax(rawcard: Card[]) {
         //I wish I knew what I did here. Looking at this is giving me a headache.
         //This returns the maximum valued card, from the medain set.
         //First it returns the median value, and if there is multiple median values, then it gets the maximum
