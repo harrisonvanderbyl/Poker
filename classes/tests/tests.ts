@@ -1,8 +1,8 @@
 import { Hand } from "../hand/hand";
 
-var noflush = ["C", "H", "C", "H", "C"];
-var isflush = ["H", "H", "H", "H", "H"];
-var faces = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"];
+let noflush = ["C", "H", "C", "H", "C"];
+let isflush = ["H", "H", "H", "H", "H"];
+let faces = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"];
 function randomInteger(min: number, max: number) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -11,7 +11,7 @@ function randomInteger(min: number, max: number) {
 
 export class Tests {
     public static randomNumbers(amount: any = 5, max: any = 13) {
-        var ret: string[] = [];
+        let ret: string[] = [];
         for (let u = 0; u < amount;) {
             let ran = faces[randomInteger(0, max)];
 
@@ -32,7 +32,7 @@ export class Tests {
         switch (rank) {
             case 1: {
                 let nums = this.randomNumbers(5);
-                var hand = nums.map((a, i) => {
+                let hand = nums.map((a, i) => {
                     return a + noflush[i];
                 });
 
@@ -41,7 +41,7 @@ export class Tests {
             case 2: {
                 let nums = this.randomNumbers(4);
                 nums.push(nums[1]);
-                var hand = nums.map((a, i) => {
+                let hand = nums.map((a, i) => {
                     return a + noflush[i];
                 });
                 return new Hand(hand);
@@ -50,7 +50,7 @@ export class Tests {
                 let nums = this.randomNumbers(3);
                 nums.push(nums[1]);
                 nums.push(nums[0]);
-                var hand = nums.map((a, i) => {
+                let hand = nums.map((a, i) => {
                     return a + noflush[i];
                 });
                 return new Hand(hand);
@@ -59,7 +59,7 @@ export class Tests {
                 let nums = this.randomNumbers(3);
                 nums.push(nums[1]);
                 nums.push(nums[1]);
-                var hand = nums.map((a, i) => {
+                let hand = nums.map((a, i) => {
                     return a + noflush[i];
                 });
                 return new Hand(hand);
@@ -72,14 +72,14 @@ export class Tests {
                 nums.push(faces[start + 2]);
                 nums.push(faces[start + 3]);
                 nums.push(faces[start + 4]);
-                var hand = nums.map((a, i) => {
+                let hand = nums.map((a, i) => {
                     return a + noflush[i];
                 });
                 return new Hand(hand);
             }
             case 6: {
                 let nums = this.randomNumbers(5);
-                var hand = nums.map((a, i) => {
+                let hand = nums.map((a, i) => {
                     return a + isflush[i];
                 });
                 return new Hand(hand);
@@ -89,7 +89,7 @@ export class Tests {
                 nums.push(nums[1]);
                 nums.push(nums[1]);
                 nums.push(nums[0]);
-                var hand = nums.map((a, i) => {
+                let hand = nums.map((a, i) => {
                     return a + noflush[i];
                 });
                 return new Hand(hand);
@@ -99,27 +99,27 @@ export class Tests {
                 nums.push(nums[1]);
                 nums.push(nums[1]);
                 nums.push(nums[1]);
-                var hand = nums.map((a, i) => {
+                let hand = nums.map((a, i) => {
                     return a + noflush[i];
                 });
                 return new Hand(hand);
             }
             case 9: {
-                let start = randomInteger(2, 9);
+                let start = randomInteger(2, 8);
                 let nums: String[] = [];
                 nums.push(faces[start]);
                 nums.push(faces[start + 1]);
                 nums.push(faces[start + 2]);
                 nums.push(faces[start + 3]);
                 nums.push(faces[start + 4]);
-                var hand = nums.map((a, i) => {
+                let hand = nums.map((a, i) => {
                     return a + isflush[i];
                 });
                 return new Hand(hand);
             }
             case 10: {
                 let nums = faces.slice(-5);
-                var hand = nums.map((a, i) => {
+                let hand = nums.map((a, i) => {
                     return a + isflush[i];
                 });
                 return new Hand(hand);
@@ -130,7 +130,7 @@ export class Tests {
         }
     }
     public static checkCompare(style = randomInteger(1, 10), amount = 100) {
-        //TODO Finish this test
+        //TODO Finish this test, Honestly not even sure how to do this
         for (let u = 0; u < amount; u++) {
             let h1 = this.createHand(style);
             let newcards: string[] = h1.cards.map((a) => a.raw);
@@ -147,9 +147,10 @@ export class Tests {
                 console.log(h?.cards);
                 console.log("Expected:" + style);
                 console.log("Returned:" + rank);
-            } else {
-                console.log("Passed");
-            }
+                if(style == 1 && rank == 5){
+                    console.log("Random hand of cards produced a straight. This is a lucky draw, not an error")
+                }
+            } 
         }
     }
 }

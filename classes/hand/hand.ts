@@ -1,8 +1,11 @@
+
+import { assert } from "console";
 import { Card } from "../card/card";
 
 export class Hand {
     private _cards: Card[] = [];
     constructor(data: string[]) {
+        assert(data.length==5,"Expected 5 cards, Recieved "+data.length)
         for (let part of data) {
             this._cards.push(new Card(part));
         }
@@ -11,6 +14,9 @@ export class Hand {
         return this._cards;
     }
     public static getMedianMax(rawcard: any) {
+        //I wish I knew what I did here. Looking at this is giving me a headache.
+        //This returns the maximum valued card, from the medain set.
+        //First it returns the median value, and if there is multiple median values, then it gets the maximum
         let cards: any = rawcard.reduce(function (cards: any, x: any) {
             if (!cards[x.value]) {
                 cards[x.value] = 1;
@@ -40,21 +46,24 @@ export class Hand {
         }
         return 0;
     }
-
+    //Remove the Median Maximum Card
     public static removeMedianMax(cards: any) {
-        var index = this.getMedianMax(cards);
+        let index = this.getMedianMax(cards);
 
         return cards.filter((c: any, a: any) => {
             return c.value != index;
         });
     }
 
-    public static isBigger = (theircards: any, mycards: any): number => {
+    public static isBigger = (theircards: Card[], mycards: Card[]): number => {
         if (Hand.getMedianMax(theircards) < Hand.getMedianMax(mycards)) {
             return 1;
         }
         if (Hand.getMedianMax(theircards) > Hand.getMedianMax(mycards)) {
-            return 0;
+            return -1;
+        }
+        if(theircards.length == 0){
+            return 0; //Both hands have exactly same face value
         }
         return Hand.isBigger(
             Hand.removeMedianMax(theircards),
@@ -62,7 +71,7 @@ export class Hand {
         );
     };
 
-    private countCardDupes() {
+    private countCardDupes() { //Returns the rank if a Hand contains Duplicates, otherwise returns 1
         let v: any = {};
         for (let card of this._cards) {
             if (typeof v[card.value] != "undefined") {
@@ -71,7 +80,7 @@ export class Hand {
                 v[card.value] = 0;
             }
         }
-        var values: number[] = Object.values(v);
+        let values: number[] = Object.values(v);
 
         switch (Object.keys(v).length) {
             case 5:
@@ -83,14 +92,15 @@ export class Hand {
             case 3:
                 return 2 + Math.max(...values);
             default:
-                return 1;
+                throw("Somethings Gone Terribly Wrong")
         }
     }
     public static getMax(fings: Card[]) {
         return Math.max(...fings.map((a) => a.value));
+        //Finds the max card value in a hand
     }
-    get isFlush() {
-        var suits = this._cards.reduce(
+    get isFlush() { //Returns rank 6 if flush
+        let suits = this._cards.reduce(
             (map: any, obj) => ((map[obj.suit] = 1), map),
             {}
         );
@@ -100,7 +110,7 @@ export class Hand {
         return 0;
     }
 
-    get isStraight() {
+    get isStraight() { //Returns Rank 5 if flush
         let vals = this._cards.map((a) => a.value);
         if (Math.max(...vals) - Math.min(...vals) == 4) {
             return 5;
@@ -109,7 +119,7 @@ export class Hand {
     }
 
     get rank() {
-        var dupevals = this.countCardDupes(); // rank 1,2,3,4,7,8
+        let dupevals = this.countCardDupes(); // rank 1,2,3,4,7,8
         if (dupevals > 1) {
             //ranks 2,3,4,7,8 are mutually incompatiple with other ranks
             return dupevals;

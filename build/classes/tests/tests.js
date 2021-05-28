@@ -112,7 +112,7 @@ var Tests = /** @class */ (function () {
                 return new hand_1.Hand(hand);
             }
             case 9: {
-                var start = randomInteger(2, 9);
+                var start = randomInteger(2, 8);
                 var nums = [];
                 nums.push(faces[start]);
                 nums.push(faces[start + 1]);
@@ -139,7 +139,7 @@ var Tests = /** @class */ (function () {
     Tests.checkCompare = function (style, amount) {
         if (style === void 0) { style = randomInteger(1, 10); }
         if (amount === void 0) { amount = 100; }
-        //TODO Finish this test
+        //TODO Finish this test, Honestly not even sure how to do this
         for (var u = 0; u < amount; u++) {
             var h1 = this.createHand(style);
             var newcards = h1.cards.map(function (a) { return a.raw; });
@@ -158,9 +158,9 @@ var Tests = /** @class */ (function () {
                 console.log(h === null || h === void 0 ? void 0 : h.cards);
                 console.log("Expected:" + style);
                 console.log("Returned:" + rank);
-            }
-            else {
-                console.log("Passed");
+                if (style == 1 && rank == 5) {
+                    console.log("Random hand of cards produced a straight. This is a lucky draw, not an error");
+                }
             }
         }
     };

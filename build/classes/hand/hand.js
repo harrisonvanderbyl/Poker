@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var console_1 = require("console");
 var card_1 = require("../card/card");
 var Hand = /** @class */ (function () {
     function Hand(data) {
         this._cards = [];
+        console_1.assert(data.length == 5, "Expected 5 cards, Recieved " + data.length);
         for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
             var part = data_1[_i];
             this._cards.push(new card_1.Card(part));
@@ -17,6 +19,9 @@ var Hand = /** @class */ (function () {
         configurable: true
     });
     Hand.getMedianMax = function (rawcard) {
+        //I wish I knew what I did here. Looking at this is giving me a headache.
+        //This returns the maximum valued card, from the medain set.
+        //First it returns the median value, and if there is multiple median values, then it gets the maximum
         var cards = rawcard.reduce(function (cards, x) {
             if (!cards[x.value]) {
                 cards[x.value] = 1;
@@ -48,6 +53,7 @@ var Hand = /** @class */ (function () {
         }
         return 0;
     };
+    //Remove the Median Maximum Card
     Hand.removeMedianMax = function (cards) {
         var index = this.getMedianMax(cards);
         return cards.filter(function (c, a) {
@@ -76,11 +82,12 @@ var Hand = /** @class */ (function () {
             case 3:
                 return 2 + Math.max.apply(Math, values);
             default:
-                return 1;
+                throw ("Somethings Gone Terribly Wrong");
         }
     };
     Hand.getMax = function (fings) {
         return Math.max.apply(Math, fings.map(function (a) { return a.value; }));
+        //Finds the max card value in a hand
     };
     Object.defineProperty(Hand.prototype, "isFlush", {
         get: function () {
@@ -134,7 +141,10 @@ var Hand = /** @class */ (function () {
             return 1;
         }
         if (Hand.getMedianMax(theircards) > Hand.getMedianMax(mycards)) {
-            return 0;
+            return -1;
+        }
+        if (theircards.length == 0) {
+            return 0; //Both hands have exactly same face value
         }
         return Hand.isBigger(Hand.removeMedianMax(theircards), Hand.removeMedianMax(mycards));
     };
