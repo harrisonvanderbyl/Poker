@@ -4,15 +4,15 @@ var hand_1 = require("./classes/hand/hand");
 var readable = process.stdin;
 var chunks = [];
 //Get all data from stream
-readable.on('readable', function () {
+readable.on("readable", function () {
     var chunk;
     while (null !== (chunk = readable.read())) {
         chunks.push(chunk);
     }
 });
 //Combine data into classes
-readable.on('end', function () {
-    var content = chunks.join('');
+readable.on("end", function () {
+    var content = chunks.join("");
     var handArray = content.split("\n");
     var p1wins = 0;
     var p2wins = 0;
@@ -21,25 +21,21 @@ readable.on('end', function () {
         var pieces = hand.split(" ");
         var p1 = new hand_1.Hand(pieces.slice(0, 5));
         var p2 = new hand_1.Hand(pieces.slice(5));
-        if (p1.value > p2.value) {
-            console.log("P1");
+        if (p1.rank > p2.rank) {
             p1wins += 1;
         }
-        if (p1.value < p2.value) {
-            console.log("P2");
+        if (p1.rank < p2.rank) {
             p2wins += 1;
         }
-        if (p1.value == p2.value) {
-            console.log("same");
-            if (hand_1.Hand.isbigger(p2.fingers, p1.fingers)) {
+        if (p1.rank == p2.rank) {
+            if (hand_1.Hand.isBigger(p2.cards, p1.cards)) {
                 p1wins += 1;
-                console.log("P1");
             }
             else {
                 p2wins += 1;
-                console.log("P2");
             }
         }
     }
-    console.log(p1wins, p2wins);
+    console.log("Player 1: " + p1wins);
+    console.log("Player 2: " + p2wins);
 });

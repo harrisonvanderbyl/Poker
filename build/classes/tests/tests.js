@@ -18,7 +18,9 @@ var Tests = /** @class */ (function () {
         var ret = [];
         var _loop_1 = function (u) {
             var ran = faces[randomInteger(0, max)];
-            if (ret.find(function (a) { return a == ran; })) {
+            if (ret.find(function (a) {
+                return a == ran;
+            })) {
             }
             else {
                 u++;
@@ -33,31 +35,40 @@ var Tests = /** @class */ (function () {
         }
         return ret;
     };
-    Tests.createHand = function (style) {
-        switch (style) {
+    Tests.createHand = function (rank) {
+        //Generates a hand of a particular rank
+        switch (rank) {
             case 1: {
                 var nums = this.randomNumbers(5);
-                var hand = nums.map(function (a, i) { return a + noflush[i]; });
+                var hand = nums.map(function (a, i) {
+                    return a + noflush[i];
+                });
                 return new hand_1.Hand(hand);
             }
             case 2: {
                 var nums = this.randomNumbers(4);
                 nums.push(nums[1]);
-                var hand = nums.map(function (a, i) { return a + noflush[i]; });
+                var hand = nums.map(function (a, i) {
+                    return a + noflush[i];
+                });
                 return new hand_1.Hand(hand);
             }
             case 3: {
                 var nums = this.randomNumbers(3);
                 nums.push(nums[1]);
                 nums.push(nums[0]);
-                var hand = nums.map(function (a, i) { return a + noflush[i]; });
+                var hand = nums.map(function (a, i) {
+                    return a + noflush[i];
+                });
                 return new hand_1.Hand(hand);
             }
             case 4: {
                 var nums = this.randomNumbers(3);
                 nums.push(nums[1]);
                 nums.push(nums[1]);
-                var hand = nums.map(function (a, i) { return a + noflush[i]; });
+                var hand = nums.map(function (a, i) {
+                    return a + noflush[i];
+                });
                 return new hand_1.Hand(hand);
             }
             case 5: {
@@ -68,12 +79,16 @@ var Tests = /** @class */ (function () {
                 nums.push(faces[start + 2]);
                 nums.push(faces[start + 3]);
                 nums.push(faces[start + 4]);
-                var hand = nums.map(function (a, i) { return a + noflush[i]; });
+                var hand = nums.map(function (a, i) {
+                    return a + noflush[i];
+                });
                 return new hand_1.Hand(hand);
             }
             case 6: {
                 var nums = this.randomNumbers(5);
-                var hand = nums.map(function (a, i) { return a + isflush[i]; });
+                var hand = nums.map(function (a, i) {
+                    return a + isflush[i];
+                });
                 return new hand_1.Hand(hand);
             }
             case 7: {
@@ -81,7 +96,9 @@ var Tests = /** @class */ (function () {
                 nums.push(nums[1]);
                 nums.push(nums[1]);
                 nums.push(nums[0]);
-                var hand = nums.map(function (a, i) { return a + noflush[i]; });
+                var hand = nums.map(function (a, i) {
+                    return a + noflush[i];
+                });
                 return new hand_1.Hand(hand);
             }
             case 8: {
@@ -89,7 +106,9 @@ var Tests = /** @class */ (function () {
                 nums.push(nums[1]);
                 nums.push(nums[1]);
                 nums.push(nums[1]);
-                var hand = nums.map(function (a, i) { return a + noflush[i]; });
+                var hand = nums.map(function (a, i) {
+                    return a + noflush[i];
+                });
                 return new hand_1.Hand(hand);
             }
             case 9: {
@@ -100,12 +119,16 @@ var Tests = /** @class */ (function () {
                 nums.push(faces[start + 2]);
                 nums.push(faces[start + 3]);
                 nums.push(faces[start + 4]);
-                var hand = nums.map(function (a, i) { return a + isflush[i]; });
+                var hand = nums.map(function (a, i) {
+                    return a + isflush[i];
+                });
                 return new hand_1.Hand(hand);
             }
             case 10: {
                 var nums = faces.slice(-5);
-                var hand = nums.map(function (a, i) { return a + isflush[i]; });
+                var hand = nums.map(function (a, i) {
+                    return a + isflush[i];
+                });
                 return new hand_1.Hand(hand);
             }
             default: {
@@ -116,21 +139,23 @@ var Tests = /** @class */ (function () {
     Tests.checkCompare = function (style, amount) {
         if (style === void 0) { style = randomInteger(1, 10); }
         if (amount === void 0) { amount = 100; }
+        //TODO Finish this test
         for (var u = 0; u < amount; u++) {
             var h1 = this.createHand(style);
-            var newfingers = h1.fingers.map(function (a) { return a.raw; });
-            var h2 = new hand_1.Hand(newfingers);
+            var newcards = h1.cards.map(function (a) { return a.raw; });
+            var h2 = new hand_1.Hand(newcards);
         }
     };
     Tests.checkStyle = function (style, amount) {
         if (style === void 0) { style = randomInteger(1, 10); }
         if (amount === void 0) { amount = 100; }
+        //Generates styles and checks them. NOTE: Rank 1 can sometimes generate rank 5(Straight) cards if the stars align
         for (var u = 0; u < amount; u++) {
             var h = this.createHand(style);
             var rank = h === null || h === void 0 ? void 0 : h.rank;
             if (rank != style) {
                 console.log("error!");
-                console.log(h === null || h === void 0 ? void 0 : h.fingers);
+                console.log(h === null || h === void 0 ? void 0 : h.cards);
                 console.log("Expected:" + style);
                 console.log("Returned:" + rank);
             }
